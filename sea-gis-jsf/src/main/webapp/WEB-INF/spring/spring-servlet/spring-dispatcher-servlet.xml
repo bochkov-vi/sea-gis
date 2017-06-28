@@ -54,4 +54,10 @@
         <property name="flowExecutor" ref="flowExecutor" />
     </bean>
 
+
+    <!-- Enables FlowHandler URL mapping -->
+    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
+        <property name="flowExecutor" ref="flowExecutor" />
+    </bean>
+
 </beans>

@@ -7,15 +7,46 @@
       xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
+    <h:outputStylesheet library="openlayers" name="ol.css"/>
+    <h:outputScript library="openlayers" name="ol-debug.js"/>
     <title>
         <ui:insert name="title"></ui:insert>
     </title>
 </h:head>
 
 <h:body>
+
     <div id="map">
 
     </div>
+    <script type="text/javascript">
+        var layers = [
+            new ol.layer.Tile({
+                source: new ol.source.TileWMS({
+                    url: 'http://localhost:8080/sea/spring/proxy',
+                    params: {
+                        'LAYERS': 'sea:EA_base_lines_area',
+                        'TILED': true
+                    }
+                })
+            })
+        ];
+
+        var map = new ol.Map({
+            controls: ol.control.defaults().extend([
+                new ol.control.ScaleLine({
+                    units: 'degrees'
+                })
+            ]),
+            layers: layers,
+            target: 'map',
+            view: new ol.View({
+                projection: 'EPSG:4326',
+                center: [150,50],
+                zoom: 5
+            })
+        });
+    </script>
 </h:body>
 
 </html>
