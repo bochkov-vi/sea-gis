@@ -8,33 +8,34 @@
 	-->
 
     <!-- Imports user-defined @Controller beans that process client requests -->
-    <import resource="controllers.xml" />
-    <import resource="spring-webflow.xml" />
+    <import resource="controllers.xml"/>
+    <import resource="spring-webflow.xml"/>
 
     <!-- Scan for Spring beans declared via annotations. -->
     <context:component-scan base-package="com.bochkov.sea"/>
 
     <!-- Enables the Spring MVC @Controller programming model -->
-    <mvc:annotation-driven />
+    <mvc:annotation-driven/>
 
     <!--
         Enable serving of classpath with Spring 3 resource serving mechanism. For example:
         /webflow-primefaces-showcase/app/resources/styles/blueprint/print.css
     -->
-    <mvc:resources location="/" mapping="/resources/**" />
+    <mvc:resources location="/" mapping="/resources/**"/>
 
     <!--
         Enable processing of JSF 2 resource requests. For example:
         /webflow-primefaces-showcase/app/javax.faces.resource/jsf.js?ln=javax.faces
     -->
-    <faces:resources />
+    <faces:resources/>
 
     <!--
         Maps request paths to flows in the flowRegistry; e.g. a path of
         /hotels/booking looks for a flow with id "hotels/booking"
     -->
     <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerMapping">
-        <property name="flowRegistry" ref="flowRegistry" />
+        <property name="flowRegistry" ref="flowRegistry"/>
+        <property name="order" value="1"/>
     </bean>
 
     <!--
@@ -42,22 +43,53 @@
         resources in the /WEB-INF/views directory
     -->
     <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-        <property name="viewClass" value="org.springframework.faces.mvc.JsfView" />
-        <property name="prefix" value="/WEB-INF/views/" />
-        <property name="suffix" value=".xhtml" />
+        <property name="viewClass" value="org.springframework.faces.mvc.JsfView"/>
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <property name="suffix" value=".xhtml"/>
     </bean>
 
     <!--
         Dispatches requests mapped to flows to FlowHandler implementations
     -->
     <bean class="org.springframework.faces.webflow.JsfFlowHandlerAdapter">
-        <property name="flowExecutor" ref="flowExecutor" />
+        <property name="flowExecutor" ref="flowExecutor"/>
     </bean>
 
 
-    <!-- Enables FlowHandler URL mapping -->
-    <bean class="org.springframework.webflow.mvc.servlet.FlowHandlerAdapter">
-        <property name="flowExecutor" ref="flowExecutor" />
+    <!-- Spring MVC Request handler Mapping -->
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping">
+        <property name="order" value="0"/>
     </bean>
+
+    <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="order" value="0"/>
+        <property name="viewClass" value="com.bochkov.sea.view.WmsView"/>
+    </bean>
+
+    <!--<bean id="excelView" class="com.bochkov.sea.view.WmsView">
+        <property name="contextRelative" value="true"/>
+        <property name="url" value="/proxy"/>
+    </bean>-->
+
+    <!--  &lt;!&ndash;Find views returned in ModelAndView("viewName") in src/main/resources/views &ndash;&gt;
+      &lt;!&ndash; Order is IMPORTANT! If viewResolver will be first - 404 will be when PDF create &ndash;&gt;
+      <bean id="viewPDFResolver" class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+          <property name="order" value="0"/>
+          <property name="basename" value="views"/>
+      </bean>
+
+      &lt;!&ndash;for xls exporter&ndash;&gt;
+      <bean id="viewExcelResolver" class="org.springframework.web.servlet.view.XmlViewResolver">
+          <property name="location" value="/WEB-INF/spring/utils-config.xml"/>
+          <property name="order" value="0"/>
+      </bean>
+
+      <bean id="viewResolver"
+                  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+          <property name="prefix" value="/WEB-INF/" />
+          <property name="suffix" value=".xhtml" />
+          <property name="order" value="1"/>
+      </bean>-->
+
 
 </beans>

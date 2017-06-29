@@ -4,7 +4,8 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets">
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://java.sun.com/jsf/html">
 
 <h:head>
     <h:outputStylesheet library="openlayers" name="ol.css"/>
@@ -15,7 +16,11 @@
 </h:head>
 
 <h:body>
-
+    <h:form>
+        <ui:insert name="title"></ui:insert>
+        <p:commandButton value="Next" action="next"/>
+        <p:commandButton value="Wms" action="wms"/>
+    </h:form>
     <div id="map">
 
     </div>
@@ -42,7 +47,7 @@
             target: 'map',
             view: new ol.View({
                 projection: 'EPSG:4326',
-                center: [150,50],
+                center: [150, 50],
                 zoom: 5
             })
         });

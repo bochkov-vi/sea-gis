@@ -20,7 +20,7 @@
     </webflow:flow-registry>
 
     <!-- Configures the Spring Web Flow JSF integration -->
-    <faces:flow-builder-services id="flowBuilderServices"/>
+    <faces:flow-builder-services id="flowBuilderServices" />
 
     <!-- A listener maintain one FacesContext instance per Web Flow request. -->
     <bean id="facesContextListener"

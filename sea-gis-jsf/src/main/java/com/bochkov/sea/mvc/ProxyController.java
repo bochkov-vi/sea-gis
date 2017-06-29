@@ -11,6 +11,7 @@ import org.apache.http.impl.client.HttpClients;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,6 +44,11 @@ public class ProxyController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @RequestMapping("downloadWms")
+    public ModelAndView downloadWms(HttpServletRequest request, HttpServletResponse response){
+        return new ModelAndView("wmsView");
     }
 
     private void writeToResponse(HttpResponse proxiedResponse, HttpServletResponse response) {
